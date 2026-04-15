@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IWF 2026 GCS 备展完整计划 v2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;padding:24px;color:#1a1a1a}
+h1{font-size:18px;font-weight:500;margin-bottom:16px;color:#1a1a1a}
+.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.stat{background:#fff;border-radius:8px;padding:10px 12px;border:0.5px solid #e0ddd5}
+.stat-n{font-size:22px;font-weight:500;color:#1a1a1a}
+.stat-l{font-size:11px;color:#888;margin-top:2px}
+.filter-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+.filter-row span{font-size:12px;color:#888}
+.fbtn{font-size:11px;padding:3px 10px;border-radius:99px;border:0.5px solid #ccc;background:#fff;color:#666;cursor:pointer}
+.fbtn.active{background:#e6f1fb;color:#185fa5;border-color:#85b7eb}
+.fbtn:hover{background:#f0f0ea}
+.phase-block{margin-bottom:4px}
+.phase-hdr{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;border:0.5px solid #e0ddd5;background:#f5f5f0;cursor:pointer;user-select:none}
+.phase-hdr:hover{background:#eeede8}
+.pdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.ptitle{font-size:13px;font-weight:500;color:#1a1a1a;flex:1}
+.pmeta{font-size:11px;color:#888;white-space:nowrap}
+.parr{font-size:10px;color:#bbb;transition:transform .2s;margin-left:4px}
+.parr.open{transform:rotate(90deg)}
+.pbody{display:none;border:0.5px solid #e0ddd5;border-top:none;border-radius:0 0 8px 8px}
+.pbody.open{display:block}
+.pbar-wrap{height:3px;background:#e0ddd5;margin:0 12px 6px;border-radius:2px;overflow:hidden;margin-top:6px}
+.pbar-fill{height:100%;border-radius:2px;transition:width .3s}
+.track-lbl{font-size:10px;font-weight:500;padding:5px 12px 3px;color:#888;background:#fafaf7;border-bottom:0.5px solid #e0ddd5;text-transform:uppercase;letter-spacing:.04em}
+.trow{display:flex;align-items:flex-start;gap:8px;padding:6px 12px;border-bottom:0.5px solid #e0ddd5}
+.trow:last-child{border-bottom:none}
+.trow.hidden{display:none}
+.chk{width:14px;height:14px;border-radius:3px;border:0.5px solid #ccc;flex-shrink:0;margin-top:2px;cursor:pointer;background:#fff}
+.chk.done{background:#d4edda;border-color:#a3d4b0;display:flex;align-items:center;justify-content:center}
+.chk.done::after{content:'';display:block;width:7px;height:4px;border-left:1.5px solid #2d7a45;border-bottom:1.5px solid #2d7a45;transform:rotate(-45deg) translate(1px,2px)}
+.ttxt{font-size:12px;color:#1a1a1a;line-height:1.5;flex:1}
+.ttxt.struck{color:#bbb;text-decoration:line-through}
+.tdl{font-size:11px;color:#888;white-space:nowrap;margin-top:1px;flex-shrink:0}
+.tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:99px;margin-left:5px;vertical-align:middle}
+.t-overdue{background:#fce8e8;color:#a32d2d}
+.t-urgent{background:#fef3cd;color:#856404}
+.t-erc{background:#e6f1fb;color:#185fa5}
+.t-strat{background:#eeedfe;color:#3c3489}
+.t-done{background:#d4edda;color:#2d7a45}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;font-size:11px;color:#888;align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+</style>
+</head>
+<body>
+<h1>IWF 2026 — GCS 备展完整计划 v2</h1>
+<p style="font-size:12px;color:#888;margin-bottom:14px">Booth C770 · Building C · Georgia World Congress Center · Atlanta · 8/25–28, 2026</p>
+
+<div class="legend">
+  <span>标签说明：</span>
+  <span><span class="tag t-overdue">已逾期</span> 需立即补救</span>
+  <span><span class="tag t-urgent">紧急</span> 近期截止</span>
+  <span><span class="tag t-erc">ERC</span> 需登录官方系统操作</span>
+  <span><span class="tag t-strat">战略</span> 影响展会核心目标</span>
+</div>
+
+<div class="summary-grid" id="sumgrid"></div>
+<div class="filter-row">
+  <span>筛选：</span>
+  <button class="fbtn active" data-f="all">全部</button>
+  <button class="fbtn" data-f="overdue">已逾期</button>
+  <button class="fbtn" data-f="urgent">紧急</button>
+  <button class="fbtn" data-f="erc">ERC系统</button>
+  <button class="fbtn" data-f="strat">战略</button>
+</div>
+<div id="phaselist"></div>
+
+<p style="font-size:11px;color:#bbb;margin-top:20px;text-align:center">GCS · IWF 2026 备展计划 · 生成于 2026/04/15</p>
+
+<script>
+const P = [
+  {
+    id:'p0', label:'本周立即处理 · 4月14-20日', color:'#E24B4A',
+    tracks:[
+      {name:'已逾期 — 立即补救', tasks:[
+        {t:'ERC：完善 Official Exhibitor Online Directory（company description + 正确 product categories，注意删除"Mass Timber"错误标签）', dl:'逾期 1/1', tags:['overdue','erc']},
+        {t:'ERC：上传 Exhibitor Media（company overview、product one-pager、视频或图片）', dl:'逾期 1/1', tags:['overdue','erc']},
+      ]},
+      {name:'本周截止', tasks:[
+        {t:'Housing Early Names：今明两天完成酒店预订并填写人员名单（Maritz Global Events portal）', dl:'4/20 截止', tags:['urgent','erc']},
+        {t:'锁定参展人员名单与角色分工（sales lead、产品讲解、lead capture）', dl:'本周', tags:['urgent','strat']},
+        {t:'锁定 hero category：确认哪 1-2 个品类上展（drawer systems 或 door line）', dl:'本周', tags:['urgent','strat']},
+        {t:'对齐核心 message：一句话定位 + 10秒 elevator pitch 内部统一', dl:'本周', tags:['urgent','strat']},
+      ]}
+    ]
+  },
+  {
+    id:'p1', label:'4月下旬 · 行政基础', color:'#D85A30',
+    tracks:[
+      {name:'ERC 系统操作', tasks:[
+        {t:'ERC：下载并阅读 Exhibitor Service Manual（ESM），记录所有服务 early-bird deadline', dl:'4月底', tags:['erc']},
+        {t:'ERC：确认 booth 付款状态，Complete Booth Sales Payments', dl:'5/18', tags:['erc']},
+        {t:'ERC：确认是否使用 EAC，如用场馆官方承包商 GES 则无需另行注册', dl:'4月底', tags:['erc']},
+      ]},
+      {name:'保险', tasks:[
+        {t:'购买 General Liability Insurance（coverage ≥ $1M，Additional Insured 包含 IWF + GWCC）', dl:'4月底', tags:['urgent']},
+      ]},
+      {name:'差旅', tasks:[
+        {t:'规划航班（建议 8/24 到达 Atlanta，8/29 离开）', dl:'4月底', tags:[]},
+        {t:'购买 GWCC 停车许可证（每日 $16.95，可在线预购）', dl:'4月底', tags:[]},
+      ]}
+    ]
+  },
+  {
+    id:'p2', label:'5月 · 展位设计与产品', color:'#BA7517',
+    tracks:[
+      {name:'展位设计', tasks:[
+        {t:'20×25ft（C770, Building C）展位平面布局：入口焦点区、产品陈列区（可触摸）、洽谈角', dl:'5月中', tags:['strat']},
+        {t:'展位视觉方向定稿：品牌名 + 一句话定位 backdrop，category 分区清晰可识别', dl:'5月中', tags:['strat']},
+        {t:'委托搭建方，准备 booth drawing（需标注所有展示物高度，含背墙/侧墙灯光）', dl:'5月底', tags:[]},
+        {t:'如有 hanging sign：单独准备 Hanging Sign Approval 申请材料', dl:'6/1 截止', tags:['urgent']},
+      ]},
+      {name:'产品与样品', tasks:[
+        {t:'确认展品清单：hero category 展示品数量 + 可带走样品包数量', dl:'5月中', tags:['strat']},
+        {t:'样品包装设计启动：品牌标签、规格卡、安装说明、联系方式 + QR code（指向 landing page）', dl:'5月底', tags:['strat']},
+        {t:'样品制作/备货启动（需为 freight deadline 留足备货时间）', dl:'5月底', tags:['strat']},
+      ]},
+      {name:'ERC 服务预订', tasks:[
+        {t:'ERC：预订展位基础服务 — Electricity、Internet（趁 early-bird 价格）', dl:'5月', tags:['erc']},
+        {t:'ERC：购买 Lead Retrieval Scanner，设置 lead capture app + 分类标签（hot/warm/cold）', dl:'6/2 免费截止', tags:['erc','urgent']},
+        {t:'ERC：Lead Management Systems — 在 6/2 前完成 SWAP voucher 激活（IWFSWAP2026）', dl:'6/2 截止', tags:['erc','urgent']},
+      ]}
+    ]
+  },
+  {
+    id:'p3', label:'6月 · 材料制作与审批', color:'#639922',
+    tracks:[
+      {name:'官方审批（hard deadline）', tasks:[
+        {t:'提交 Booth & Hanging Sign Design 审批给 J.P. Roberts（jp@iwfatlanta.com）', dl:'6/1 截止', tags:['urgent','erc']},
+        {t:'Display & Hanging Sign Rules & Regulations 确认合规', dl:'6/1 截止', tags:['erc']},
+        {t:'如有展位喷涂需求，提交 Spraying Request', dl:'6/30 截止', tags:['erc']},
+      ]},
+      {name:'印刷与数字材料', tasks:[
+        {t:'产品 one-pager 制作（每个 hero category 一张：品类说明、兼容体系、规格范围、联系方式）', dl:'6月中', tags:['strat']},
+        {t:'公司 overview card（GCS 是谁、卖什么、NJ 仓库 + 交期优势、样品获取方式）', dl:'6月中', tags:['strat']},
+        {t:'展位 backdrop / banner 设计定稿并送印（注意展馆高度限制）', dl:'6月底', tags:[]},
+        {t:'名片制作（所有参展人员）', dl:'6月底', tags:[]},
+      ]},
+      {name:'数字资产', tasks:[
+        {t:'网站 B2B landing page 上线：面向 cabinet maker，含样品申请表单、NJ 仓库/交期信息、QR code', dl:'6月底', tags:['strat','urgent']},
+        {t:'CRM lead tracking 系统搭建并测试（展会用）', dl:'6月底', tags:[]},
+        {t:'Follow-up email template 编写（展后 48小时版 + 2周版）', dl:'6月底', tags:['strat']},
+      ]},
+      {name:'人员', tasks:[
+        {t:'ERC：完成所有 Staff Badge 注册', dl:'7/23 截止', tags:['erc']},
+        {t:'Housing Final Names 提交（已预订房间必须分配到注册人名下）', dl:'6/22 截止', tags:['erc','urgent']},
+      ]}
+    ]
+  },
+  {
+    id:'p4', label:'7月 · 物流与预热', color:'#378ADD',
+    tracks:[
+      {name:'物流（freight deadlines 严格）', tasks:[
+        {t:'选定 freight forwarder，确认 shipping timeline（DSV Fairs & Events USA 为官方合作方）', dl:'7月初', tags:['urgent']},
+        {t:'准备 packing list + commercial invoice，确认 HS code', dl:'7月初', tags:[]},
+        {t:'海运 FCL：货物需在 7/29 前到达 Savannah 港（advance warehouse）', dl:'7/29', tags:['urgent']},
+        {t:'海运 LCL advance warehouse：货物需在 7/29 前到达', dl:'7/29', tags:['urgent']},
+        {t:'空运 / LCL 直送：货物需在展前 10-21 天到达 Atlanta Terminal', dl:'7/24–8/7', tags:['urgent']},
+        {t:'LCL 直送 Atlanta：需在展前 21 天到达（约 8/4 前）', dl:'~8/4', tags:[]},
+        {t:'Assigned Freight Arrival & Removal Schedules — 如有特殊需求提交 Variance Request（GES）', dl:'7/1', tags:['erc']},
+      ]},
+      {name:'ERC 最终服务确认', tasks:[
+        {t:'ERC：Booth Furnishings / Carpet / Tables / Chairs 折扣价截止前下单', dl:'7/27 截止', tags:['erc','urgent']},
+        {t:'ERC：确认 Electricity / Internet / Cleaning 订单 final', dl:'7月', tags:['erc']},
+        {t:'ERC：如需官方摄影服务，在 7/1 前预订 Photography', dl:'7/1', tags:['erc']},
+        {t:'ERC：Exhibitor & Qualified Distributor Badge / Guest Passes 最终确认', dl:'7/23', tags:['erc']},
+        {t:'ERC：Housing 关闭前最终确认房间与人员对应', dl:'7/24 关闭', tags:['erc']},
+        {t:'ERC：Electrical / Compressed Air / Water / Drain 预订（Booth C770，start 8/4）', dl:'8/4', tags:['erc']},
+      ]},
+      {name:'营销预热', tasks:[
+        {t:'LinkedIn 展前内容序列发布（3-5篇）：建立"GCS 出现在 IWF C770"的行业存在感', dl:'7月', tags:['strat']},
+        {t:'识别并建立目标 cabinet shop 名单（20-30家），展前 2-3 周启动定向 outreach', dl:'7月底', tags:['strat']},
+        {t:'Outreach 话术：邀请到展位 C770，可提前预约 15 分钟看 hero category 样品', dl:'7月底', tags:['strat']},
+      ]}
+    ]
+  },
+  {
+    id:'p5', label:'8月初 · 最终准备', color:'#534AB7',
+    tracks:[
+      {name:'物流确认', tasks:[
+        {t:'确认所有货物 tracking number + 到馆时间', dl:'8月初', tags:['urgent']},
+        {t:'确认展品到达，booth installation 时间安排（Move-in：8/24-25）', dl:'8/24', tags:[]},
+      ]},
+      {name:'材料清点', tasks:[
+        {t:'清点所有印刷材料（brochures / sample labels / business cards / price list）已发货到展馆', dl:'8月初', tags:[]},
+        {t:'样品包数量确认（展位陈列品 + 可带走包）', dl:'8月初', tags:['strat']},
+      ]},
+      {name:'团队培训', tasks:[
+        {t:'Elevator pitch 演练：3秒开场 + 产品介绍 + 差异化表达，所有参展人员统一', dl:'展前', tags:['urgent','strat']},
+        {t:'客户 FAQ 对齐：MOQ、交期、NJ 仓库、兼容体系（frameless/face-frame）、样品申请流程', dl:'展前', tags:['strat']},
+        {t:'Lead capture 操作演练（scanner 使用 + hot/warm/cold 分类标准）', dl:'展前', tags:[]},
+        {t:'每日收摊流程确认：leads 整理、样品补充、隔日重点客户跟进标注', dl:'展前', tags:[]},
+      ]}
+    ]
+  },
+  {
+    id:'p6', label:'8/24–28 · 展馆现场', color:'#1D9E75',
+    tracks:[
+      {name:'Move-In (8/24-25)', tasks:[
+        {t:'展品到达确认，booth installation + 电力/网络连接', dl:'8/24', tags:[]},
+        {t:'产品陈列摆放，展位视觉检查（backdrop位置、样品标签、材料整齐）', dl:'8/24', tags:[]},
+        {t:'Lead scanner 设备测试，CRM 同步确认', dl:'8/24', tags:[]},
+      ]},
+      {name:'展会期间 (8/25-28)', tasks:[
+        {t:'每日 lead capture：扫描名片 + 手动标注对话要点与分类（hot/warm/cold）', dl:'每日', tags:['strat']},
+        {t:'主动询问报价或样品的客户：当场确认后续联系方式和跟进时间', dl:'每日', tags:['strat']},
+        {t:'每日收摊前：整理当日 leads，记录高频问题和真实反对意见', dl:'每日', tags:['strat']},
+        {t:'每日补充样品包和材料库存', dl:'每日', tags:[]},
+      ]},
+      {name:'Move-Out (8/28后)', tasks:[
+        {t:'Pack samples + 安排 freight pickup', dl:'8/28', tags:[]},
+        {t:'退还所有租赁设备（lead scanner 等）', dl:'8/28', tags:[]},
+        {t:'Booth inspection 完成，离场', dl:'8/28', tags:[]},
+      ]}
+    ]
+  },
+  {
+    id:'p7', label:'展后 · 跟进与复盘', color:'#888780',
+    tracks:[
+      {name:'展后 48小时内', tasks:[
+        {t:'给所有 leads 发个人化 follow-up email（提及聊了什么 + 下一步行动）', dl:'8/30前', tags:['urgent','strat']},
+        {t:'全部 leads 录入 CRM，按优先级分类标注', dl:'8/30前', tags:[]},
+      ]},
+      {name:'展后 2周', tasks:[
+        {t:'跟进样品发货确认（hot leads 优先）', dl:'9月中', tags:['strat']},
+        {t:'对有明确采购意向的联系人安排 15分钟 follow-up call', dl:'9月中', tags:['strat']},
+      ]},
+      {name:'展后 30天', tasks:[
+        {t:'评估哪些联系人进入真实采购讨论（dealer replacement rate 初步判断）', dl:'9月底', tags:['strat']},
+        {t:'提炼展会核心反馈：高频问题、真实反对意见 → 调整 message 和 SKU 优先级', dl:'9月底', tags:['strat']},
+        {t:'ROI 评估：leads 数、样品发出量、follow-up 转化率、初步复购意向', dl:'9月底', tags:[]},
+      ]}
+    ]
+  }
+];
+
+const TAGS = {
+  overdue:{label:'已逾期',cls:'t-overdue'},
+  urgent:{label:'紧急',cls:'t-urgent'},
+  erc:{label:'ERC',cls:'t-erc'},
+  strat:{label:'战略',cls:'t-strat'},
+  done:{label:'完成',cls:'t-done'}
+};
+
+let activeFilter = 'all';
+let taskDone = {};
+
+function renderAll(){
+  const list = document.getElementById('phaselist');
+  list.innerHTML = '';
+  P.forEach(phase => {
+    const block = document.createElement('div');
+    block.className = 'phase-block';
+    let totalT=0,doneT=0;
+    phase.tracks.forEach(tr=>tr.tasks.forEach(t=>{totalT++;if(taskDone[phase.id+'|'+tr.name+'|'+t.t])doneT++;}));
+    const pct = totalT?Math.round(doneT/totalT*100):0;
+    const hdr = document.createElement('div');
+    hdr.className='phase-hdr';
+    hdr.innerHTML=`<div class="pdot" style="background:${phase.color}"></div><span class="ptitle">${phase.label}</span><span class="pmeta" id="meta-${phase.id}">${doneT}/${totalT}</span><span class="parr" id="arr-${phase.id}">&#9654;</span>`;
+    const body = document.createElement('div');
+    body.className='pbody';
+    body.id='body-'+phase.id;
+    const barWrap=document.createElement('div');barWrap.className='pbar-wrap';
+    const barFill=document.createElement('div');barFill.className='pbar-fill';barFill.id='bar-'+phase.id;barFill.style.width=pct+'%';barFill.style.background=phase.color;
+    barWrap.appendChild(barFill);body.appendChild(barWrap);
+    phase.tracks.forEach(track=>{
+      const lbl=document.createElement('div');lbl.className='track-lbl';lbl.textContent=track.name;body.appendChild(lbl);
+      track.tasks.forEach(task=>{
+        const key=phase.id+'|'+track.name+'|'+task.t;
+        const isDone=!!taskDone[key];
+        const matchFilter = activeFilter==='all'||task.tags.includes(activeFilter)||(activeFilter==='done'&&isDone);
+        const row=document.createElement('div');
+        row.className='trow'+(matchFilter?'':' hidden');
+        const chk=document.createElement('div');chk.className='chk'+(isDone?' done':'');
+        chk.addEventListener('click',()=>{
+          taskDone[key]=!taskDone[key];
+          const wasOpen=document.getElementById('body-'+phase.id).classList.contains('open');
+          renderAll();
+          if(wasOpen){document.getElementById('body-'+phase.id).classList.add('open');document.getElementById('arr-'+phase.id).classList.add('open');}
+        });
+        let tagHtml='';
+        if(isDone){tagHtml+=`<span class="tag t-done">完成</span>`;}
+        else{task.tags.forEach(tg=>{if(TAGS[tg])tagHtml+=`<span class="tag ${TAGS[tg].cls}">${TAGS[tg].label}</span>`;});}
+        const txt=document.createElement('span');txt.className='ttxt'+(isDone?' struck':'');txt.innerHTML=task.t+tagHtml;
+        const dl=document.createElement('span');dl.className='tdl';dl.textContent=task.dl||'';
+        row.appendChild(chk);row.appendChild(txt);row.appendChild(dl);
+        body.appendChild(row);
+      });
+    });
+    hdr.addEventListener('click',()=>{
+      body.classList.toggle('open');
+      document.getElementById('arr-'+phase.id).classList.toggle('open');
+    });
+    block.appendChild(hdr);block.appendChild(body);
+    list.appendChild(block);
+  });
+  updateSummary();
+}
+
+function updateSummary(){
+  let total=0,done=0,overdue=0,urgent=0;
+  P.forEach(phase=>phase.tracks.forEach(tr=>tr.tasks.forEach(t=>{
+    const key=phase.id+'|'+tr.name+'|'+t.t;
+    total++;
+    if(taskDone[key])done++;
+    else{
+      if(t.tags.includes('overdue'))overdue++;
+      if(t.tags.includes('urgent')&&!t.tags.includes('overdue'))urgent++;
+    }
+  })));
+  document.getElementById('sumgrid').innerHTML=`
+    <div class="stat"><div class="stat-n">${total}</div><div class="stat-l">总任务数</div></div>
+    <div class="stat"><div class="stat-n" style="color:#2d7a45">${done}</div><div class="stat-l">已完成</div></div>
+    <div class="stat"><div class="stat-n" style="color:#a32d2d">${overdue}</div><div class="stat-l">逾期待补救</div></div>
+    <div class="stat"><div class="stat-n" style="color:#856404">${urgent}</div><div class="stat-l">紧急待处理</div></div>
+  `;
+}
+
+document.querySelectorAll('.fbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    activeFilter=btn.dataset.f;
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const openIds = [...document.querySelectorAll('.pbody.open')].map(b=>b.id);
+    renderAll();
+    openIds.forEach(id=>{
+      const b=document.getElementById(id);
+      if(b){b.classList.add('open');const arr=document.getElementById('arr-'+id.replace('body-',''));if(arr)arr.classList.add('open');}
+    });
+  });
+});
+
+renderAll();
+document.getElementById('body-p0').classList.add('open');
+document.getElementById('arr-p0').classList.add('open');
+</script>
+</body>
+</html>
